@@ -21,7 +21,6 @@ public class GsonModule<T> implements GsonModuleInterface {
   List<String> fieldNames;
   String fileName;
 
-
   public GsonModule(Class<T> typeParam) {
     GsonBuilder gsonBuilder = new GsonBuilder();
     this.gson = gsonBuilder.create();

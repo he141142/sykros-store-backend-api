@@ -4,6 +4,7 @@ import java.util.List;
 
 public class FieldObject {
   String name;
+  String referenceFieldName;
   Class<?> fieldType;
   Object value;
   List<String> keyMapInJson;
