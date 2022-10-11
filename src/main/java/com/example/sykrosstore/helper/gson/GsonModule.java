@@ -1,13 +1,18 @@
 package com.example.sykrosstore.helper.gson;
 
 import com.example.sykrosstore.helper.fileHelper.FileModule;
+import com.example.sykrosstore.helper.reflect.FieldObject;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import org.apache.tomcat.util.json.ParseException;
 import org.springframework.boot.configurationprocessor.json.JSONArray;
+import org.springframework.boot.configurationprocessor.json.JSONException;
 
 public class GsonModule<T> implements GsonModuleInterface {
   final Class<T> t;
@@ -30,14 +35,20 @@ public class GsonModule<T> implements GsonModuleInterface {
     this.t = builder.t;
   }
 
-  public void deserialize() {
+  public void deserialize() throws FileNotFoundException, ParseException, JSONException {
     this.gson = new GsonBuilder().registerTypeAdapter(this.t, new Deserializer<T>()).create();
-    gson.fromJson()
+    JsonObject obj = this.getJSONArrayFromFile(1);
+    gson.fromJson(obj, this.t);
   }
 
   @Override
-  public JSONArray getJSONArrayFromFile() throws FileNotFoundException, ParseException {
-    return new FileModule.FileModuleBuilder().setPath();
+  public JsonObject getJSONArrayFromFile(int index) throws FileNotFoundException, ParseException {
+    FileModule fm =
+        new FileModule.FileModuleBuilder()
+            .setPath("D:/book-store/sykros-store/src/main/resources")
+            .setFileName("/roles.json")
+            .build();
+    return fm.getJsonElement(index, fm.getJSONArrayFromFile());
   }
 
   public static class SykrosGsonBuilder<T> {
@@ -67,5 +78,6 @@ public class GsonModule<T> implements GsonModuleInterface {
       this.t = t;
       return new GsonModule(this);
     }
+
   }
 }

@@ -1,9 +1,15 @@
 package com.example.sykrosstore.helper.fileHelper;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FilenameFilter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,15 +39,35 @@ public class FileModule {
     return Arrays.stream(directories).collect(Collectors.toList());
   }
 
-  public JSONArray getJSONArrayFromFile() throws FileNotFoundException, ParseException {
+  public JsonArray getJSONArrayFromFile() throws FileNotFoundException, ParseException {
     String path =
         new ClassPathResource(this.path+this.fileName)
             .getPath();
     FileReader reader = new FileReader(path);
-    JSONParser jsonParser = new JSONParser(reader);
-    Object obj = jsonParser.parse();
-    return (JSONArray) obj;
+    JsonArray parser =  JsonParser.parseReader(reader).getAsJsonArray();
+    System.out.println(parser);
+
+    return parser;
   }
+
+  public JsonObject getJsonElement (int index,JsonArray obj){
+    System.out.println(obj.get(index).getAsJsonObject());
+        return obj.get(index).getAsJsonObject();
+  }
+
+//  public JSONArray getJSONArray() throws IOException {
+//    String path =
+//        new ClassPathResource(this.path+this.fileName)
+//            .getPath();
+//    JSONParser jsonParser = new JSONParser(this.getFileBytes(path));
+//    JSONArray root = (JSONArray) ;
+//  }
+
+  public byte[] getFileBytes(String path) throws IOException {
+    return Files.readAllBytes(new File(path).toPath());
+  }
+
+
 
   public String getFileName() {
     return fileName;
@@ -80,4 +106,6 @@ public class FileModule {
       return new FileModule(this);
     }
   }
+
+
 }

@@ -8,6 +8,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Type;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
 
 public class Deserializer<T> implements JsonDeserializer<T> {
   private Class<T> t;
@@ -17,16 +18,10 @@ public class Deserializer<T> implements JsonDeserializer<T> {
       JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext)
       throws JsonParseException {
     try {
-      T tInstance = t.getDeclaredConstructor(t).newInstance();
-      JsonArray jsonArray = jsonElement.getAsJsonArray();
-      for (int i =0;i<jsonArray.size();i++){
-        JsonObject jsonObj = jsonArray.get(i).getAsJsonObject();
-        System.out.println(jsonObj);
-      }
-    } catch (InstantiationException
-        | IllegalAccessException
-        | NoSuchMethodException
-        | InvocationTargetException e) {
+      JsonObject j = jsonElement.getAsJsonObject();
+      System.out.println(j);
+    } catch (Exception
+        e) {
       e.printStackTrace();
     }
     return null;
