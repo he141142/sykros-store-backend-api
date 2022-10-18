@@ -200,6 +200,10 @@ public class GsonModule<T> implements GsonModuleInterface {
             return getIndexByValue(idx + 1, val);
         }
 
+        /**
+        *
+        * Init default
+        * */
         private void initMapperDefault() {
             List<String> fieldOfClass = ReflectCustom.getFieldsOfClass(this.t);
             int arrSize = fieldOfClass.size();

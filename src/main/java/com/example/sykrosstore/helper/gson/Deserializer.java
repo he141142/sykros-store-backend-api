@@ -6,10 +6,12 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import org.jboss.jandex.PrimitiveType;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class Deserializer<T> implements JsonDeserializer<T> {
     private Class<T> t;
@@ -28,21 +30,21 @@ public class Deserializer<T> implements JsonDeserializer<T> {
             JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext)
             throws JsonParseException {
         try {
-            JsonObject j = jsonElement.getAsJsonObject();
-            String des = String.valueOf(j.get("description"));
 
-            System.out.println("Entry deserializer");
-            System.out.println(des);
+            JsonObject j = jsonElement.getAsJsonObject();
             T in = t.getDeclaredConstructor().newInstance();
             for (Map.Entry<String, String> mapperI : this.mappedKey.entrySet()) {
-                Object itemVal = j.get(mapperI.getValue());
-                System.out.println(mapperI.getValue());
-                System.out.println("it val");
-                if (itemVal != null){
-                    System.out.println(itemVal.toString());
-                    ReflectCustom.callSetter(in, mapperI.getKey(), ReflectCustom
-                            .getTypeOfField(t, mapperI.getKey())
-                            .cast((Object) itemVal));
+//                Object itemVal = (Object)j.get(mapperI.getValue());
+                Object itemVal = GsonHelper.castJSONPrimitive(j.get(mapperI.getValue()));
+                ReflectCustom
+                        .getTypeOfField(t, mapperI.getKey());
+                System.out.println(ReflectCustom
+                        .getTypeOfField(t, mapperI.getKey()).getName());
+                if (itemVal != null) {
+                    Object typePrimitive = ReflectCustom
+                            .getTypeOfField(t, mapperI.getKey());
+
+                    ReflectCustom.callSetter(in, mapperI.getKey(),itemVal);
                 }
 
             }

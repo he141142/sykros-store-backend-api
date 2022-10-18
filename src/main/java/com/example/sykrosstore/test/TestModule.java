@@ -34,9 +34,9 @@ public class TestModule {
 
 
     public void printRoles(ArrayList<Role> roles) {
-        System.out.printf("%20s%20s%20s\n", "name", "authority", "description");
+        System.out.printf("%-20s%-20s%-150s\n", "name", "authority", "description");
         for (int i = 0; i < roles.size(); i++) {
-            System.out.printf("%20s%20s%20s\n", "name", "authority", "description");
+            System.out.printf("%-20s%-20s%-150s\n", roles.get(i).getName(), roles.get(i).getAuthority(), roles.get(i).getDescription());
         }
     }
 }
