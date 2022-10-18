@@ -1,6 +1,8 @@
 package com.example.sykrosstore.helper.reflect;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class FieldObject {
   String name;
@@ -8,6 +10,7 @@ public class FieldObject {
   Class<?> fieldType;
   Object value;
   List<String> keyMapInJson;
+  Map<String, String> Mapper = new HashMap<>();
 
   public FieldObject(String name,Object value){
     this.name = name;

@@ -55,20 +55,9 @@ public class FileModule {
         return obj.get(index).getAsJsonObject();
   }
 
-//  public JSONArray getJSONArray() throws IOException {
-//    String path =
-//        new ClassPathResource(this.path+this.fileName)
-//            .getPath();
-//    JSONParser jsonParser = new JSONParser(this.getFileBytes(path));
-//    JSONArray root = (JSONArray) ;
-//  }
-
   public byte[] getFileBytes(String path) throws IOException {
     return Files.readAllBytes(new File(path).toPath());
   }
-
-
-
   public String getFileName() {
     return fileName;
   }
