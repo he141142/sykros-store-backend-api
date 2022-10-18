@@ -12,7 +12,7 @@ import java.util.*;
 
 import org.apache.tomcat.util.json.ParseException;
 import org.springframework.boot.configurationprocessor.json.JSONArray;
-import org.springframework.boot.configurationprocessor.json.JSONException;
+
 
 class fileUt {
     String fileName;
@@ -72,13 +72,37 @@ public class GsonModule<T> implements GsonModuleInterface {
         PrintMapper();
     }
 
+
+/**
+
     public void deserialize() throws FileNotFoundException, ParseException, JSONException {
-        this.gson = new GsonBuilder().registerTypeAdapter(this.t, new Deserializer<T>()).create();
+        this.gson = new GsonBuilder().registerTypeAdapter(this.t, new Deserializer
+                        .DeserializerBuilder()
+                        .setKeyMapper(this.keyMapper)
+                        .build())
+                .create();
         JsonArray jArr = this.getJSONArrayFromFile();
         for (int i = 0; i < jArr.size(); ++i) {
             JsonObject obj = jArr.get(i).getAsJsonObject();
             gson.fromJson(obj, this.t);
         }
+    }
+*/
+
+    public ArrayList<T> deserializeArray() throws FileNotFoundException, ParseException {
+        ArrayList<T> genericList = new ArrayList<>();
+        this.gson = new GsonBuilder().registerTypeAdapter(this.t, new Deserializer
+                        .DeserializerBuilder()
+                        .setKeyMapper(this.keyMapper)
+                        .build(t))
+                .create();
+        JsonArray jArr = this.getJSONArrayFromFile();
+        for (int i = 0; i < jArr.size(); ++i) {
+            JsonObject obj = jArr.get(i).getAsJsonObject();
+            T in = gson.fromJson(obj, this.t);
+            genericList.add(in);
+        }
+        return genericList;
     }
 
     public void PrintMapper() {
@@ -108,6 +132,7 @@ public class GsonModule<T> implements GsonModuleInterface {
         return fm.getJSONArrayFromFile();
     }
 
+
     public static class SykrosGsonBuilder<T> {
         List<String> fieldNames = new ArrayList<>();
         Class<T> t;
@@ -135,20 +160,62 @@ public class GsonModule<T> implements GsonModuleInterface {
             return this;
         }
 
-        public SykrosGsonBuilder initKeyMapper(String[][] keyMapper) {
+        public int getIndexByVal(String[][] keyMapper, String val) {
+            for (int i = 0; i < keyMapper.length; ++i) {
+                for (int j = 0; j < keyMapper[i].length; ++j) {
+                    if (val.equalsIgnoreCase(keyMapper[i][j])) {
+                        return i;
+                    }
+                }
+            }
+            return -1;
+        }
+
+        private Map<Integer, Integer> pickIdx(String[][] keyMapper) {
+            Map<Integer, Integer> idxMapper = new HashMap<>();
+            for (int i = 0; i < keyMapper.length; ++i) {
+                int idxExist = getIndexByValue(0, keyMapper[i][0]);
+                if (idxExist != -1) {
+                    idxMapper.put(idxExist, i);
+                }
+            }
+            return idxMapper;
+        }
+
+        public void printKeyMap() {
+            System.out.println("----------------------dev-----------------------------");
+            for (int k = 0; k < this.getFieldsOfClass.length; ++k) {
+                System.out.println(this.getFieldsOfClass[k][0]);
+                System.out.println(this.getFieldsOfClass[k][1]);
+            }
+        }
+
+        private int getIndexByValue(int idx, String val) {
+            if (idx == this.getFieldsOfClass.length) {
+                return -1;
+            }
+            if (this.getFieldsOfClass[idx][0].equalsIgnoreCase(val)) {
+                return idx;
+            }
+            return getIndexByValue(idx + 1, val);
+        }
+
+        private void initMapperDefault() {
             List<String> fieldOfClass = ReflectCustom.getFieldsOfClass(this.t);
             int arrSize = fieldOfClass.size();
             this.getFieldsOfClass = new String[arrSize][2];
-            for (int j = 0; j < keyMapper.length; j++) {
-                for (int k = 0; k < keyMapper[j].length; k++) {
-                    final String key = keyMapper[j][k];
-                    if (Arrays.stream(fieldOfClass.toArray()).anyMatch(str -> str.toString().equalsIgnoreCase(key))) {
-                        this.getFieldsOfClass[j][0] = fieldOfClass.get(j);
-                        this.getFieldsOfClass[j][1] = key;
-                    } else {
-                        this.getFieldsOfClass[j][0] = fieldOfClass.get(j);
-                        this.getFieldsOfClass[j][1] = fieldOfClass.get(j);
-                    }
+            for (int i = 0; i < arrSize; ++i) {
+                this.getFieldsOfClass[i][0] = fieldOfClass.get(i);
+                this.getFieldsOfClass[i][1] = fieldOfClass.get(i);
+            }
+        }
+
+        public SykrosGsonBuilder initKeyMapper(String[][] keyMapper) {
+            initMapperDefault();
+            if (keyMapper != null && (keyMapper.length != 0)) {
+                Map<Integer, Integer> idxMapper = pickIdx(keyMapper);
+                for (Map.Entry<Integer, Integer> item : idxMapper.entrySet()) {
+                    this.getFieldsOfClass[item.getKey()] = keyMapper[item.getValue()];
                 }
             }
             return this;
@@ -159,7 +226,6 @@ public class GsonModule<T> implements GsonModuleInterface {
         }
 
         public GsonModule SetClassBuilder(Class<T> t) {
-
             this.t = t;
             return new GsonModule(this);
         }

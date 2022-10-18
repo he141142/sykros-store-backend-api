@@ -9,8 +9,7 @@ public class FieldObject {
   String referenceFieldName;
   Class<?> fieldType;
   Object value;
-  List<String> keyMapInJson;
-  Map<String, String> Mapper = new HashMap<>();
+
 
   public FieldObject(String name,Object value){
     this.name = name;
@@ -33,19 +32,5 @@ public class FieldObject {
     this.fieldType = fieldType;
   }
 
-  public Object getValue() {
-    return value;
-  }
 
-  public void setValue(Object value) {
-    this.value = value;
-  }
-
-  public List<String> getKeyMapInJson() {
-    return keyMapInJson;
-  }
-
-  public void setKeyMapInJson(List<String> keyMapInJson) {
-    this.keyMapInJson = keyMapInJson;
-  }
 }

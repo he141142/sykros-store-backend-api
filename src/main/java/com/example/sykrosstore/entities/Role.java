@@ -23,6 +23,7 @@ import org.springframework.lang.Nullable;
 @Data
 @Entity
 public class Role extends BaseEntity{
+  public Role(){}
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
