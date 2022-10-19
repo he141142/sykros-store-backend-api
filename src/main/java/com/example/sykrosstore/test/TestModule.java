@@ -29,7 +29,6 @@ public class TestModule {
         }).SetClassBuilder(Role.class);
         ArrayList<Role> roles = gsonRole.deserializeArray();
         printRoles(roles);
-
     }
 
 
