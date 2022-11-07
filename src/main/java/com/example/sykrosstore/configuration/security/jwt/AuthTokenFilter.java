@@ -16,19 +16,24 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class AuthTokenFilter extends OncePerRequestFilter {
-    @Autowired
-    private JWTUtils jwtUtils;
 
-    @Autowired
-    private UserDetailServiceImpl userDetailsService;
+    private final JWTUtils jwtUtils;
+
+
+    private final UserDetailServiceImpl userDetailsService;
+
+    public AuthTokenFilter( @Autowired  JWTUtils _jwtUtils, @Autowired UserDetailServiceImpl _userDetailsService){
+                this.jwtUtils = _jwtUtils;
+                this.userDetailsService = _userDetailsService;
+    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try {
             String jwt = parseJwt(request);
-            if (jwt != null && jwtUtils.validateJwtToken(jwt)){
-                String username = jwtUtils.getUserNameFromJwtToken(jwt);
-                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+            if (jwt != null && this.jwtUtils.validateJwtToken(jwt)){
+                String username = this.jwtUtils.getUserNameFromJwtToken(jwt);
+                UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
                 UsernamePasswordAuthenticationToken authentication =
                         new UsernamePasswordAuthenticationToken(
                                 userDetails,
