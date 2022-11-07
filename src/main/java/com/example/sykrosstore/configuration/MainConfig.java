@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 @Configuration
-@Import({RoleInitialLoad.class})
+@Import({RoleInitialLoad.class,ModelMapperConfig.class})
 public class MainConfig {
 
   @Bean

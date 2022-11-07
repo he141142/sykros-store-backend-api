@@ -1,4 +1,4 @@
-package com.example.sykrosstore.common.controller;
+package com.example.sykrosstore.constants.common.controller;
 
 
 import java.lang.annotation.Documented;

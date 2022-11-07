@@ -1,6 +1,6 @@
-package com.example.sykrosstore.common.controller.advice;
+package com.example.sykrosstore.constants.common.controller.advice;
 
-import com.example.sykrosstore.common.err.ErrorDetail;
+import com.example.sykrosstore.constants.common.err.ErrorDetail;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.context.request.WebRequest;
@@ -24,9 +24,10 @@ public class CustomExcp implements IGlobalExcp {
                 .setTime(new Date())
                 .build(ex.getMessage(), request.getDescription(false));
         if (this.status == null) {
-            return new ResponseEntity<>(errorDetail, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<>(errorDetail, this.status);
+        System.out.println("bypass");
+        return new ResponseEntity<>(ex.getMessage(), this.status);
     }
 
     @Override

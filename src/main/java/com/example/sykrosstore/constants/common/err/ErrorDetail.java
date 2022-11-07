@@ -1,4 +1,4 @@
-package com.example.sykrosstore.common.err;
+package com.example.sykrosstore.constants.common.err;
 
 import java.util.Date;
 

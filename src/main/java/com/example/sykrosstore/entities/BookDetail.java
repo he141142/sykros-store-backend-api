@@ -13,5 +13,4 @@ public class BookDetail  {
   String Dimensions;
   String Languages;
   String Type;
-
 }

@@ -1,4 +1,4 @@
-package com.example.sykrosstore.common.controller;
+package com.example.sykrosstore.constants.common.controller;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Component
-@RequestMapping("api/v1/admin")
-public @interface AdminPrefix{
+//@RequestMapping("api/v1/admin")
+@GlobalPrefix
+@RequestMapping("/admin")
+public @interface AdminPrefix {
   @AliasFor(annotation = Component.class)
   String value() default "";
 }

@@ -1,4 +1,4 @@
-package com.example.sykrosstore.common.controller.advice;
+package com.example.sykrosstore.constants.common.controller.advice;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.context.request.WebRequest;

@@ -1,6 +1,9 @@
 package com.example.sykrosstore.entities;
 
 import com.example.sykrosstore.constants.EntityValidators.BookValidator;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -21,7 +24,9 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+
 @Entity
+@Data
 public class Books extends BaseEntity{
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,23 +34,29 @@ public class Books extends BaseEntity{
 
   @NotEmpty(message = BookValidator.TITLE_MANDATORY)
   @NotNull(message = BookValidator.TITLE_MANDATORY)
+  @JsonProperty("title")
   String title;
 
   @NotEmpty(message = BookValidator.EDITION_MANDATORY)
   @NotNull(message = BookValidator.EDITION_MANDATORY)
+  @JsonProperty("edition")
   String edition;
 
   @NotNull(message = BookValidator.PUBLICATION_DATE_MANDATORY)
+  @JsonFormat(pattern="yyyy-MM-dd")
   Date publicationDate;
 
-  @NotNull @NotEmpty Integer availableQuantity = 0;
+  @NotNull Integer availableQuantity = 0;
 
-  @NotNull @NotEmpty Integer page;
+  @JsonProperty("page")
+  @NotNull Integer page;
 
   @NotNull(message = BookValidator.DESCRIPTION_MANDATORY)
   @NotEmpty(message = BookValidator.DESCRIPTION_MANDATORY)
+  @JsonProperty("description")
   String description;
 
+  @JsonProperty("price")
   @NotNull(message = BookValidator.PRICE_MANDATORY)
   Double price;
 
