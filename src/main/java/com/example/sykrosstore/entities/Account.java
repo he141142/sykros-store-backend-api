@@ -17,7 +17,10 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+
+import com.example.sykrosstore.constants.common.controller.auth.AccountConstants;
 import lombok.Data;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Data
 @Entity
@@ -53,5 +56,28 @@ public class Account extends BaseEntity {
       joinColumns = @JoinColumn(name = "role_id"),
       inverseJoinColumns = @JoinColumn(name = "account_id"))
   Set<Role> roles = new HashSet<>();
+
+  public Account setPassWordEncoder(PasswordEncoder encoder){
+    this.passwordHash = encoder.encode(this.password);
+    return this;
+  }
+
+  public Account setRole(List<Role> roles){
+      roles.stream().peek(
+              r -> this.roles.add(r)
+      );
+      return this;
+  }
+
+  public static Account buildForSignup(
+          String password,
+          String userName
+  ){
+    Account account = new Account();
+    account.setPassword(password);
+    account.setStatus(AccountConstants.ACCOUNT_STATUS_ACTIVE);
+    account.setUserName(userName);
+    return account;
+  }
 
 }

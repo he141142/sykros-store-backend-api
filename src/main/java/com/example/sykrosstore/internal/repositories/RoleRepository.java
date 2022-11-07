@@ -26,4 +26,5 @@ public interface RoleRepository extends CrudRepository<Role, Long> {
     List<Role> getRoleByAccountId(Long accountId);
 
 
+
 }
