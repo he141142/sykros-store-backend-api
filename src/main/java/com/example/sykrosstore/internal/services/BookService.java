@@ -46,7 +46,6 @@ public class BookService implements IBookService {
         }catch (Exception e){
             throw new UpdateException("cant update database").setEntity("Books");
         }
-
         return updateBook;
     }
 
