@@ -1,6 +1,8 @@
 package com.example.sykrosstore.internal.services;
 
+import com.example.sykrosstore.constants.EntityValidators.BookValidator;
 import com.example.sykrosstore.constants.common.controller.advice.EntityException;
+import com.example.sykrosstore.constants.common.controller.advice.UpdateException;
 import com.example.sykrosstore.entities.BookDetail;
 import com.example.sykrosstore.entities.Books;
 import com.example.sykrosstore.internal.controller.dto.book.UpdateBook;
@@ -31,15 +33,20 @@ public class BookService implements IBookService {
     }
 
 
-    public UpdateBook UpdateBookDetail(UpdateBook updateBook, Long id) throws EntityException {
+    public UpdateBook UpdateBookDetail(UpdateBook updateBook, Long id) throws EntityException, UpdateException {
         Books b = null;
         Optional<Books> book = this.bookRepositories.findById(id);
         if (book.isPresent()) {
             b = updateBook.bindBook(book.get());
         } else {
-            throw new EntityException("Books doesn't exist");
+            throw new EntityException(BookValidator.BOOK_NOT_EXIST);
         }
-        this.bookRepositories.save(b);
+        try {
+            this.bookRepositories.save(b);
+        }catch (Exception e){
+            throw new UpdateException("cant update database").setEntity("Books");
+        }
+
         return updateBook;
     }
 

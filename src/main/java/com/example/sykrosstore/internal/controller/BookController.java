@@ -2,6 +2,7 @@ package com.example.sykrosstore.internal.controller;
 
 import com.example.sykrosstore.constants.common.controller.AdminPrefix;
 import com.example.sykrosstore.constants.common.controller.advice.EntityException;
+import com.example.sykrosstore.constants.common.controller.advice.UpdateException;
 import com.example.sykrosstore.entities.Books;
 import com.example.sykrosstore.internal.controller.dto.book.UpdateBook;
 import com.example.sykrosstore.internal.services.IBookService;
@@ -30,7 +31,7 @@ public class BookController {
     }
 
     @RequestMapping(value = "update", method = RequestMethod.PATCH)
-    public UpdateBook updateBookDetail(@Valid @RequestBody UpdateBook updateBook,@Param("id") Long id) throws EntityException {
+    public UpdateBook updateBookDetail(@Valid @RequestBody UpdateBook updateBook,@Param("id") Long id) throws EntityException, UpdateException {
         this.bookService.UpdateBookDetail(updateBook,id);
         return updateBook;
     }

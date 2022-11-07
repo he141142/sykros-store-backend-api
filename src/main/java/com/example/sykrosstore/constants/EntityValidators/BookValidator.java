@@ -7,5 +7,6 @@ public class BookValidator {
   public static final String PRICE_MANDATORY= "Price is mandatory!";
   public static final String DESCRIPTION_MANDATORY= "Description is mandatory!";
 
+  public static final String BOOK_NOT_EXIST = "Book doesn't exist";
 
 }

@@ -17,19 +17,12 @@ public class GlobleExceptionHandler {
     }
 
 
-    @ExceptionHandler({FileNotFoundException.class, ParseException.class, EntityException.class})
+    @ExceptionHandler({FileNotFoundException.class, ParseException.class, EntityException.class, UpdateException.class})
     public ResponseEntity<?> resourceNotFoundExcp(Exception ex, WebRequest request) {
         CustomExcp customExcp = new CustomExcp.Builder().setStatus(HttpStatus.NOT_FOUND).setErr(
                 new ErrorDetail(ex.getMessage(), request.getDescription(false))
         ).build();
-        System.out.println("sttus code");
-        System.out.println( customExcp.getResponseExp(ex,request).getStatusCode().value());
-
         System.out.println(ex.getMessage());
-        return customExcp.getResponseExp(ex,request);
+        return customExcp.getResponseExp(ex, request);
     }
-
-
-
-
 }
