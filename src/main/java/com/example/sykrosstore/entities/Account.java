@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Consumer;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -63,9 +64,17 @@ public class Account extends BaseEntity {
   }
 
   public Account setRole(List<Role> roles){
-      roles.stream().peek(
-              r -> this.roles.add(r)
-      );
+      roles.forEach(role -> {
+        this.getRoles().add(role);
+      });
+      return this;
+  }
+
+  public Account buildCustomer(Customers customer){
+    List<Customers> customers1 = new ArrayList<>();
+    customer.setAccount(this);
+    customers1.add(customer);
+      this.setCustomersList(customers1);
       return this;
   }
 

@@ -1,10 +1,13 @@
 package com.example.sykrosstore.internal.controller;
 
+import com.example.sykrosstore.constants.common.controller.advice.EntityException;
+import com.example.sykrosstore.entities.Account;
 import com.example.sykrosstore.internal.controller.dto.auth.SignUpRequest;
 import com.example.sykrosstore.internal.repositories.RoleRepository;
 import com.example.sykrosstore.internal.repositories.UserRepository;
 import com.example.sykrosstore.internal.services.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -40,8 +43,8 @@ public class AuthController {
                 this.encoder = encoder;
     }
 
-    public ResponseEntity<?> SignUpMember(@Valid @RequestBody SignUpRequest signUpRequest){
-            this.authService.signUp(signUpRequest);
-            return null;
+    public ResponseEntity<?> SignUpMember(@Valid @RequestBody SignUpRequest signUpRequest) throws EntityException {
+        Account account = this.authService.signUp(signUpRequest);
+        return new ResponseEntity<>(account, HttpStatus.OK);
     }
 }

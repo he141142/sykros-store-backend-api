@@ -13,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+
+import com.example.sykrosstore.internal.controller.dto.auth.SignUpRequest;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -57,4 +59,15 @@ public class Customers  extends BaseEntity{
   @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @JoinColumn(name = "account_id")
   private Account account;
+
+  public static Customers buildCustomerBySignUp(SignUpRequest signUpRequest){
+      Customers customer = new Customers();
+      if (signUpRequest.getCity()!=null) customer.setCity(signUpRequest.getCity());
+      customer.setCountry(signUpRequest.getCountry());
+      customer.setEmail(signUpRequest.getEmail());
+      customer.setPhoneNumber(signUpRequest.getPhoneNumber());
+      customer.setFirstName(customer.getFirstName());
+      customer.setLastName(customer.getLastName());
+      return customer;
+  }
 }
