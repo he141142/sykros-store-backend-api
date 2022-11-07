@@ -6,6 +6,7 @@ import com.example.sykrosstore.configuration.security.jwt.JWTUtils;
 import com.example.sykrosstore.configuration.security.service.UserDetailServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -23,14 +24,14 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
         // securedEnabled = true,
         // jsr250Enabled = true,
         prePostEnabled = true)
+@Configuration
 public class WebSecuritySykros {
+    @Autowired
     UserDetailServiceImpl userDetailsService;
 
     private AuthEntryPointJwt unauthorizedHandler;
     public WebSecuritySykros(
-            @Autowired UserDetailServiceImpl userDetailsService,
             @Autowired AuthEntryPointJwt unauthorizedHandler){
-            this.userDetailService = userDetailsService;
             this.unauthorizedHandler = unauthorizedHandler;
     }
 
@@ -41,7 +42,7 @@ public class WebSecuritySykros {
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
 
-        authProvider.setUserDetailsService(userDetailsService);
+        authProvider.setUserDetailsService(this.userDetailsService);
         authProvider.setPasswordEncoder(passwordEncoder());
 
         return authProvider;
@@ -66,7 +67,7 @@ public class WebSecuritySykros {
         http.cors().and().csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .authorizeRequests().antMatchers("/api/auth/**").permitAll()
+                .authorizeRequests().antMatchers("/**").permitAll()
                 .antMatchers("/api/test/**").permitAll()
                 .anyRequest().authenticated();
 

@@ -13,12 +13,13 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping(value = "auth")
+@RequestMapping(value = "auths")
 public class AuthController {
     AuthenticationManager authenticationManager;
 
@@ -41,8 +42,10 @@ public class AuthController {
                 this.userRepository = userRepository;
                 this.authenticationManager = authenticationManager;
                 this.encoder = encoder;
+                this.authService = authService.injectPasswordEncoder(encoder);
     }
 
+    @RequestMapping(value = "/signup",method = RequestMethod.POST)
     public ResponseEntity<?> SignUpMember(@Valid @RequestBody SignUpRequest signUpRequest) throws EntityException {
         Account account = this.authService.signUp(signUpRequest);
         return new ResponseEntity<>(account, HttpStatus.OK);
