@@ -26,7 +26,6 @@ public class CustomExcp implements IGlobalExcp {
         if (this.status == null) {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        System.out.println("bypass");
         return new ResponseEntity<>(ex.getMessage(), this.status);
     }
 
