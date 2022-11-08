@@ -66,8 +66,9 @@ public class Customers  extends BaseEntity{
       customer.setCountry(signUpRequest.getCountry());
       customer.setEmail(signUpRequest.getEmail());
       customer.setPhoneNumber(signUpRequest.getPhoneNumber());
-      customer.setFirstName(customer.getFirstName());
-      customer.setLastName(customer.getLastName());
+      customer.setFirstName(signUpRequest.getFirstName());
+      customer.setLastName(signUpRequest.getLastName());
+      customer.setState(signUpRequest.getState());
       return customer;
   }
 }

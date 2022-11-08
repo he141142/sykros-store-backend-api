@@ -52,4 +52,7 @@ public class SignUpRequest {
 
     @JsonProperty("country")
     @NotNull @NotEmpty @Column String country;
+
+    @JsonProperty("state")
+    @NotNull @NotEmpty String state;
 }

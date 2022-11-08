@@ -83,12 +83,6 @@ public class Books extends BaseEntity{
   @OneToMany(mappedBy = "book")
   List<BookImages> bookImages = new ArrayList<>();
 
-  @ManyToMany
-  @JoinTable(
-      name = "user_role",
-      joinColumns = @JoinColumn(name = "role_id"),
-      inverseJoinColumns = @JoinColumn(name = "book_id"))
-  Set<Role> roles = new HashSet<>();
 
   @ManyToMany
   @JoinTable(

@@ -39,8 +39,8 @@ public class UserDetail implements UserDetails {
     }
 
     public static UserDetail buildUser(Account account){
-        List<GrantedAuthority> authorities = account.getRoles().stream()
-                .map(role -> new SimpleGrantedAuthority(role.getName()))
+        List<GrantedAuthority> authorities = account.getUserRoles().stream()
+                .map(role -> new SimpleGrantedAuthority(role.getRole().getName()))
                 .collect(Collectors.toList());
 
         return new UserDetail(

@@ -3,6 +3,7 @@ package com.example.sykrosstore.constants.common.controller.advice;
 import com.example.sykrosstore.constants.common.err.ErrorDetail;
 import com.example.sykrosstore.custom.validation.ValidationConstraint;
 import com.example.sykrosstore.custom.validation.Violation;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.WebRequest;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import java.io.FileNotFoundException;
@@ -46,5 +48,11 @@ public class GlobleExceptionHandler {
             );
         }
         return new ResponseEntity<>(validationConstraint,HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler({DataIntegrityViolationException.class})
+    @ResponseBody
+    public ResponseEntity<?> onDataIntegrityViolationException(HttpServletRequest req, DataIntegrityViolationException exc){
+        return new ResponseEntity<>("Something wrong when write to database",HttpStatus.BAD_REQUEST);
     }
 }

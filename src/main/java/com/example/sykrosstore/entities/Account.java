@@ -4,26 +4,19 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.function.Consumer;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import com.example.sykrosstore.constants.common.controller.auth.AccountConstants;
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-@Data
+@Getter
+@Setter
 @Entity
 public class Account extends BaseEntity {
   @Id
@@ -51,28 +44,34 @@ public class Account extends BaseEntity {
   @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
   private List<Publisher> publishers = new ArrayList<>();
 
-  @ManyToMany
-  @JoinTable(
-      name = "user_role",
-      joinColumns = @JoinColumn(name = "role_id"),
-      inverseJoinColumns = @JoinColumn(name = "account_id"))
-  Set<Role> roles = new HashSet<>();
+
+  @JsonIgnore
+  @OneToMany(mappedBy = "account",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+  private List<UserRoles> userRoles = new ArrayList<>();
 
   public Account setPassWordEncoder(PasswordEncoder encoder){
     this.passwordHash = encoder.encode(this.password);
     return this;
   }
 
+
+
   public Account setRole(List<Role> roles){
+    List<UserRoles> rolesList = new ArrayList<>();
       roles.forEach(role -> {
-        this.getRoles().add(role);
+        UserRoles userRolesEntity = new UserRoles();
+        userRolesEntity.setRole(role);
+        userRolesEntity.setAccount(this);
+        rolesList.add(userRolesEntity);
       });
+      this.setUserRoles(rolesList);
+    System.out.println(this.getUserRoles().get(0).getRole().getName());
       return this;
   }
 
   public Account buildCustomer(Customers customer){
     List<Customers> customers1 = new ArrayList<>();
-    customer.setAccount(this);
+//    customer.setAccount(this);
     customers1.add(customer);
       this.setCustomersList(customers1);
       return this;

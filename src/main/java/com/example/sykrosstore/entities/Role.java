@@ -8,14 +8,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.io.FileNotFoundException;
 import java.util.*;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -60,12 +53,14 @@ public class Role extends BaseEntity {
     @NotNull
     private Date updatedAt = new Date();
 
-    @ManyToMany
-    @JoinTable(
-            name = "user_role",
-            joinColumns = @JoinColumn(name = "account_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
-    Set<Account> accounts = new HashSet<>();
+//    @ManyToMany
+//    @JoinTable(
+//            name = "user_role",
+//            joinColumns = @JoinColumn(name = "role_id"),
+//            inverseJoinColumns = @JoinColumn(name = "account_id"))
+//    Set<Account> accounts = new HashSet<>();
+@OneToMany(mappedBy = "role")
+private List<UserRoles> userRoles = new ArrayList<>();
 
     public String getName() {
         return name;
@@ -83,13 +78,18 @@ public class Role extends BaseEntity {
         this.description = description;
     }
 
-    public Set<Account> getAccounts() {
-        return accounts;
-    }
+//    public Set<Account> getAccounts() {
+//        return accounts;
+//    }
 
-    public void setAccounts(Set<Account> accounts) {
-        this.accounts = accounts;
-    }
+//    public void setAccounts(Set<Account> accounts) {
+//        this.accounts = accounts;
+//    }
+
+
+//    public void addAccount(Account account){
+//        this.accounts.add(account);
+//    }
 
     public ArrayList<Role> loadDefault() throws FileNotFoundException, ParseException {
         AbstractApplicationContext abCtx = new ClassPathXmlApplicationContext("role.xml");
