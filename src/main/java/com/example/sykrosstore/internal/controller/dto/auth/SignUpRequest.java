@@ -1,6 +1,7 @@
 package com.example.sykrosstore.internal.controller.dto.auth;
 
 import com.example.sykrosstore.constants.EntityValidators.CustomerValidator;
+import com.example.sykrosstore.internal.decoreators.interfaces.UniqueAccount;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
@@ -13,6 +14,7 @@ import javax.validation.constraints.Pattern;
 public class SignUpRequest {
     @NotNull
     @NotEmpty
+    @UniqueAccount
     @JsonProperty("user_name")
     String userName;
 

@@ -55,4 +55,12 @@ public class GlobleExceptionHandler {
     public ResponseEntity<?> onDataIntegrityViolationException(HttpServletRequest req, DataIntegrityViolationException exc){
         return new ResponseEntity<>("Something wrong when write to database",HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler({DatabaseOperationException.class})
+    @ResponseBody
+    public ResponseEntity<?> onDatabaseOperationFailed(HttpServletRequest req, DatabaseOperationException exc){
+        return new ResponseEntity<>(exc.getMessage(),HttpStatus.BAD_REQUEST);
+    }
+
+
 }

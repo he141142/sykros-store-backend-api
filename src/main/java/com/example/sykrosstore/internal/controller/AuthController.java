@@ -1,7 +1,9 @@
 package com.example.sykrosstore.internal.controller;
 
+import com.example.sykrosstore.configuration.security.reponse.JwtResponse;
 import com.example.sykrosstore.constants.common.controller.advice.EntityException;
 import com.example.sykrosstore.entities.Account;
+import com.example.sykrosstore.internal.controller.dto.auth.SignInRequest;
 import com.example.sykrosstore.internal.controller.dto.auth.SignUpRequest;
 import com.example.sykrosstore.internal.repositories.RoleRepository;
 import com.example.sykrosstore.internal.repositories.UserRepository;
@@ -9,7 +11,6 @@ import com.example.sykrosstore.internal.services.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +22,6 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping(value = "auths")
 public class AuthController {
-    AuthenticationManager authenticationManager;
 
     UserRepository userRepository;
 
@@ -33,14 +33,11 @@ public class AuthController {
                           RoleRepository roleRepository,
                           @Autowired
                           UserRepository userRepository,
-                          @Autowired
-                          AuthenticationManager authenticationManager,
                           @Autowired AuthService authService
 
                           ){
                 this.roleRepository = roleRepository;
                 this.userRepository = userRepository;
-                this.authenticationManager = authenticationManager;
                 this.encoder = encoder;
                 this.authService = authService.injectPasswordEncoder(encoder);
     }
@@ -50,4 +47,13 @@ public class AuthController {
         Account account = this.authService.signUp(signUpRequest);
         return new ResponseEntity<>(account, HttpStatus.OK);
     }
+
+
+    @RequestMapping(value = "/signIn",method = RequestMethod.POST)
+    public ResponseEntity<?> signInAccount(@Valid @RequestBody SignInRequest dto){
+        JwtResponse jwtResponse = this.authService.signIn(dto);
+        return new ResponseEntity<>(jwtResponse, HttpStatus.OK);
+    }
+
+
 }

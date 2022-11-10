@@ -1,5 +1,6 @@
 package com.example.sykrosstore.configuration.security.service;
 
+import com.example.sykrosstore.configuration.security.reponse.JwtResponse;
 import com.example.sykrosstore.entities.Account;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
@@ -14,6 +15,8 @@ public class UserDetail implements UserDetails {
     private static final long serialVersionUID = 1L;
 
     private Long id;
+
+    private String passwordHash;
 
     private String username;
 
@@ -38,6 +41,14 @@ public class UserDetail implements UserDetails {
         this.authorities = authorities;
     }
 
+    public String getUserPasswordHash() {
+        return this.passwordHash;
+    }
+    public UserDetail setUserPasswordHash(String _hash){
+        this.passwordHash = _hash;
+        return this;
+    }
+
     public static UserDetail buildUser(Account account){
         List<GrantedAuthority> authorities = account.getUserRoles().stream()
                 .map(role -> new SimpleGrantedAuthority(role.getRole().getName()))
@@ -47,7 +58,7 @@ public class UserDetail implements UserDetails {
                 account.getId(),
                 account.getUserName(),
                 account.getPassword(),
-                authorities);
+                authorities).setUserPasswordHash(account.getPasswordHash());
     }
 
     @Override
@@ -78,5 +89,16 @@ public class UserDetail implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public void setJWTHashed(){
+
+    }
+
+    public JwtResponse buildJWTResponse(String jwt_hash){
+        return new JwtResponse.JwtResponseBuilder()
+                .setJwtHash(jwt_hash)
+                .setPasswordHash(this.getUserPasswordHash()).
+                build(this.getUsername());
     }
 }
