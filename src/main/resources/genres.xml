@@ -46,7 +46,7 @@
     </Genres>
     <Genres>
         <name>Non Fiction</name>
-        <SubGenres>
+        <SubGenresList>
             <SubGenres>
                 <name>Biographies And Memoir</name>
                 <description>A memoir tells readers about significant moments in the life of the author. Memoirs are
@@ -75,6 +75,6 @@
                     maintaining happiness, and even parenting or starting a new business.
                 </description>
             </SubGenres>
-        </SubGenres>
+        </SubGenresList>
     </Genres>
 </GenresList>

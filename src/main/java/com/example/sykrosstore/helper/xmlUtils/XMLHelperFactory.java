@@ -16,6 +16,7 @@ public class XMLHelperFactory {
 
     public XMLHelperFactory(String absolutePath) {
         this.xmlInputFactory = XMLInputFactory.newInstance();
+        this.absolutePath = absolutePath;
     }
 
     public List<Genres> getGenres() throws IOException, XMLStreamException {
@@ -31,6 +32,8 @@ public class XMLHelperFactory {
         Subgenres subGenresEntity = null;
         while (reader.hasNext()) {
             int event = reader.next();
+
+
             switch (event) {
                 case XMLStreamConstants.START_ELEMENT:
                     switch (reader.getLocalName()) {
@@ -48,11 +51,10 @@ public class XMLHelperFactory {
                     }
                     break;
                 case XMLStreamConstants.CHARACTERS:
-                    tagContent = reader.getText().trim();
+                    tagContent+= reader.getText().trim();
                     break;
                 case XMLStreamConstants.END_ELEMENT:
                     switch (reader.getLocalName()) {
-
                         case "name":
                             if (SubGenresLevel) {
                                 assert subGenresEntity != null;
@@ -64,7 +66,7 @@ public class XMLHelperFactory {
                             break;
 
                         case "description":
-                            if (!SubGenresLevel) {
+                            if (SubGenresLevel) {
                                 assert subGenresEntity != null;
                                 subGenresEntity.setDescription(tagContent);
                             }
@@ -82,6 +84,7 @@ public class XMLHelperFactory {
                         case "Genres":
                             genresList.add(genres);
                     }
+                    tagContent = "";
                     break;
             }
         }

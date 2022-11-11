@@ -8,14 +8,14 @@ import javax.xml.stream.XMLStreamException;
 import java.io.IOException;
 import java.util.List;
 
-@Component
 public class GenresInitialLoad extends InitialLoad {
     List<Genres> genresList;
     XMLHelperFactory xmlHelperFactory;
-    public GenresInitialLoad(String __loc,String __fName){
-        super(__loc,__fName);
+    public GenresInitialLoad setUp(){
         this.xmlHelperFactory = new XMLHelperFactory(this.getAbsolutePath());
+        return this;
     }
+
 
     public GenresInitialLoad loadGenres() throws XMLStreamException, IOException {
         this.genresList = this.xmlHelperFactory.getGenres();

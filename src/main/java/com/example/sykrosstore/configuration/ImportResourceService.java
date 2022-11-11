@@ -1,10 +1,12 @@
 package com.example.sykrosstore.configuration;
 
 import com.example.sykrosstore.configuration.InitialLoad.Constants;
+import com.example.sykrosstore.configuration.InitialLoad.GenresInitialLoad;
 import com.example.sykrosstore.configuration.InitialLoad.RoleInitialLoad;
 
 public class ImportResourceService {
     private RoleInitialLoad roleInitialLoad;
+    private GenresInitialLoad genresInitialLoad;
 
     public RoleInitialLoad getRoleInitialLoad() {
         return roleInitialLoad;
