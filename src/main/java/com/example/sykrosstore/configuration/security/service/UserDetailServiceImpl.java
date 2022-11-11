@@ -15,6 +15,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
     UserRepository userRepository;
 
     public UserDetailServiceImpl(@Autowired UserRepository _userRepository) {
+        this.userRepository = _userRepository;
     }
 
     @Override

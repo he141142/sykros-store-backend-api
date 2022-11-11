@@ -2,6 +2,7 @@ package com.example.sykrosstore.internal.controller;
 
 import com.example.sykrosstore.configuration.security.reponse.JwtResponse;
 import com.example.sykrosstore.constants.common.controller.advice.EntityException;
+import com.example.sykrosstore.custom.responseEntity.Message;
 import com.example.sykrosstore.entities.Account;
 import com.example.sykrosstore.internal.controller.dto.auth.SignInRequest;
 import com.example.sykrosstore.internal.controller.dto.auth.SignUpRequest;
@@ -52,8 +53,11 @@ public class AuthController {
     @RequestMapping(value = "/signIn",method = RequestMethod.POST)
     public ResponseEntity<?> signInAccount(@Valid @RequestBody SignInRequest dto){
         JwtResponse jwtResponse = this.authService.signIn(dto);
-        return new ResponseEntity<>(jwtResponse, HttpStatus.OK);
+        return new Message.builderMessage<JwtResponse>()
+                .setMsg("Sign in Successfully")
+                .setData(jwtResponse)
+                .httpStatus(HttpStatus.OK)
+                .buildMsg()
+                .buildResponse();
     }
-
-
 }

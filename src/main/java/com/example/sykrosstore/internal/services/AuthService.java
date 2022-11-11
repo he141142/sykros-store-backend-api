@@ -7,6 +7,7 @@ import com.example.sykrosstore.constants.DatabaseOperation;
 import com.example.sykrosstore.constants.common.controller.advice.DatabaseOperationException;
 import com.example.sykrosstore.constants.common.controller.advice.EntityException;
 import com.example.sykrosstore.constants.common.controller.auth.AccountConstants;
+import com.example.sykrosstore.custom.responseEntity.Message;
 import com.example.sykrosstore.entities.Account;
 import com.example.sykrosstore.entities.Customers;
 import com.example.sykrosstore.entities.Role;
@@ -36,24 +37,26 @@ public class AuthService implements IAuthService {
 
 
     JWTUtils jwtUtils;
+
     AuthenticationManager authenticationManager;
 
-    public AuthService(@Autowired
+    @Autowired
+    public AuthService(
                        UserRepository userRepository,
-                       @Autowired
                        RoleRepository roleRepository,
-                       @Autowired JWTUtils jwtUtils) {
+                       JWTUtils jwtUtils,
+                       AuthenticationManager authenticationManager) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.jwtUtils = jwtUtils;
+        this.authenticationManager = authenticationManager;
+
     }
 
     public AuthService injectPasswordEncoder(PasswordEncoder encoder) {
         this.encoder = encoder;
         return this;
     }
-
-    ;
 
     @Transactional
     public Account signUp(SignUpRequest signUpRequest) throws EntityException {
@@ -89,10 +92,12 @@ public class AuthService implements IAuthService {
         return userDetails.buildJWTResponse(jwt);
     }
 
+    @Transactional
     public String clearUserByUserName(String userName) throws DatabaseOperationException {
         try {
            this.userRepository.deleteAllByUserName(userName);
         }catch (Exception e){
+            e.printStackTrace();
             throw new DatabaseOperationException("FAILED")
                     .setOpType(DatabaseOperation.DELETE);
         }

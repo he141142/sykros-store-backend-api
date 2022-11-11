@@ -29,7 +29,7 @@ public class UserDetail implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return this.authorities;
     }
 
 
@@ -63,7 +63,7 @@ public class UserDetail implements UserDetails {
 
     @Override
     public String getPassword() {
-        return this.password;
+        return this.passwordHash;
     }
 
     @Override

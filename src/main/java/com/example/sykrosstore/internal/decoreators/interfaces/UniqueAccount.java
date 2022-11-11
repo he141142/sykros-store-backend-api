@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = UniqueLoginValidator.class)
 public @interface UniqueAccount {
-    String message() default "{err}";
+    String message() default "User Name already exist";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }
