@@ -15,11 +15,14 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.springframework.format.annotation.DateTimeFormat;
 
-@Data
+@Getter
+@Setter
 @Entity
 public class Genres  extends BaseEntity{
   @Id

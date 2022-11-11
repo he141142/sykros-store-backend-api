@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<GenresList>
+    <Genres>
+        <name>Fiction</name>
+        <SubGenresList>
+            <SubGenres>
+                <name>Romance</name>
+                <description>
+                    Oh romance, how could we ever resist you?
+                    The genre that makes your heart all warm and fuzzy focuses on the love story of the main
+                    protagonists. This world of fiction is extremely wide-reaching in and of itself, as it has a variety
+                    of sub-genres including: contemporary romance, historical, paranormal, and the steamier erotica. If
+                    you're in need of any suggestions, we've got a list of the best romances of all time and the top
+                    picks of the year.
+                </description>
+            </SubGenres>
+            <SubGenres>
+                <name>Comic Book or Graphic Novel</name>
+                <description>The stories in comic books and graphic novels are presented to the reader through engaging,
+                    sequential narrative art (illustrations and typography) that's either presented in a specific design
+                    or the traditional panel layout you find in comics. With both, you'll often find the dialogue
+                    presented in the tell-tale "word balloons" next to the respective characters.
+                </description>
+            </SubGenres>
+            <SubGenres>
+                <name>Historical Fiction</name>
+                <description>These books are based in a time period set in the past decades, often against the backdrop
+                    of significant (real) historical events.
+                </description>
+            </SubGenres>
+            <SubGenres>
+                <name>Horror</name>
+                <description>Meant to cause discomfort and fear for both the character and readers, horror writers often
+                    make use of supernatural and paranormal elements in morbid stories that are sometimes a little too
+                    realistic. The master of horror fiction? None other than Stephen King
+                </description>
+            </SubGenres>
+            <SubGenres>
+                <name>Literary Fiction</name>
+                <description>Though it can be seen as a broad genre that encompasses many others, literary fiction
+                    refers to the perceived artistic writing style of the author. Their prose is meant to evoke deep
+                    thought through stories that offer personal or social commentary on a particular theme.
+                </description>
+            </SubGenres>
+        </SubGenresList>
+    </Genres>
+    <Genres>
+        <name>Non Fiction</name>
+        <SubGenres>
+            <SubGenres>
+                <name>Biographies And Memoir</name>
+                <description>A memoir tells readers about significant moments in the life of the author. Memoirs are
+                    sometimes confused with autobiographies since they are both written from the same perspective.
+                    However, what differentiates the two is that memoirs may be written about a shorter period of time,
+                    such as a specific event or experience in the writer’s life.
+
+                    Both biographies and autobiographies focus on retelling a life story, but the two genres are
+                    different. Autobiographies are written about and by the author. Biographies are third-person
+                    narratives, where the author tells someone else’s story (while still remaining accurate and
+                    factual). Unlike autobiographies, the subject of the story can be living or dead when writing
+                    biographies.
+                </description>
+            </SubGenres>
+            <SubGenres>
+                <name>History</name>
+                <description>History nonfiction writing involves recounting a historical event or specific time period.
+                    While authors can frame how the information is presented, all information presented in history
+                    nonfiction must be verifiable, factual, and historically accurate.
+                </description>
+            </SubGenres>
+            <SubGenres>
+                <name>Self Development &amp; Hobbies</name>
+                <description>The self-help genre is surprisingly (or perhaps not!) one of the most popular categories on
+                    nonfiction. Here, authors can teach readers anything from new skills, how to manage finance,
+                    maintaining happiness, and even parenting or starting a new business.
+                </description>
+            </SubGenres>
+        </SubGenres>
+    </Genres>
+</GenresList>

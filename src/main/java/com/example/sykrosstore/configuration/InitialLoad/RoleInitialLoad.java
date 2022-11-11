@@ -26,4 +26,7 @@ public class RoleInitialLoad extends InitialLoad {
   public void setFileName(String fileName) {
     this.fileName = fileName;
   }
+
+
+
 }

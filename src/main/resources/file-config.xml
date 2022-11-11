@@ -3,4 +3,8 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+    <bean id="genresInitialLoad" class="com.example.sykrosstore.configuration.InitialLoad.GenresInitialLoad">
+        <property name="location" value="D:/book-store/sykros-store/src/main/resources"/>
+        <property name="fileName" value="/genres.xml"/>
+    </bean>
 </beans>
