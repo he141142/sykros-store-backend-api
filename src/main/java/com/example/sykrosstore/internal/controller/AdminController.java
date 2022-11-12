@@ -6,7 +6,6 @@ import com.example.sykrosstore.constants.common.controller.AdminPrefix;
 import com.example.sykrosstore.constants.common.controller.advice.DatabaseOperationException;
 import com.example.sykrosstore.entities.Role;
 import com.example.sykrosstore.internal.services.AuthService;
-import com.example.sykrosstore.internal.services.BookService;
 import com.example.sykrosstore.internal.services.IBookService;
 import com.example.sykrosstore.internal.services.IRoleService;
 import org.apache.tomcat.util.json.ParseException;

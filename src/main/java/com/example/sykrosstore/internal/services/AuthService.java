@@ -15,6 +15,7 @@ import com.example.sykrosstore.internal.controller.dto.auth.SignInRequest;
 import com.example.sykrosstore.internal.controller.dto.auth.SignUpRequest;
 import com.example.sykrosstore.internal.repositories.RoleRepository;
 import com.example.sykrosstore.internal.repositories.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -30,6 +31,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+//@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class AuthService implements IAuthService {
     UserRepository userRepository;
     RoleRepository roleRepository;
@@ -103,5 +105,7 @@ public class AuthService implements IAuthService {
         }
         return "Operation Success";
     }
+
+
 
 }

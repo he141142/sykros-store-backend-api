@@ -1,22 +1,21 @@
 package com.example.sykrosstore.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.util.ArrayList;
 import java.util.Date;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import java.util.List;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import lombok.Data;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
-@Data
+@Setter
+@Getter
 @Entity
 public class Subgenres  extends BaseEntity{
 
@@ -26,7 +25,10 @@ public class Subgenres  extends BaseEntity{
 
   @NotNull @NotEmpty String name;
 
-  @NotNull @NotEmpty String description;
+  @NotNull
+  @NotEmpty
+  @Column(length = 2555,name = "description")
+  String description;
 
   @DateTimeFormat(pattern = "yyyy/MM/dd")
   @JsonFormat(pattern="yyyy/MM/dd")
@@ -40,7 +42,19 @@ public class Subgenres  extends BaseEntity{
   @NotNull
   private Date updatedAt = new Date();
 
-  @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "genres_id")
+  @JsonIgnore
   Genres genres;
+
+  @JsonIgnore
+  @OneToMany(mappedBy = "subgenres")
+  List<BookGenres> bookGenres = new ArrayList<>();
+
+  @ManyToMany
+  @JoinTable(
+          name = "book_genres",
+          joinColumns = @JoinColumn(name = "subgenres_id"),
+          inverseJoinColumns = @JoinColumn(name = "book_id"))
+  List<Books> booksList = new ArrayList<>();
 }

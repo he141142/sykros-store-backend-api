@@ -51,7 +51,7 @@ public class XMLHelperFactory {
                     }
                     break;
                 case XMLStreamConstants.CHARACTERS:
-                    tagContent+= reader.getText().trim();
+                    tagContent += reader.getText().trim();
                     break;
                 case XMLStreamConstants.END_ELEMENT:
                     switch (reader.getLocalName()) {
@@ -79,7 +79,8 @@ public class XMLHelperFactory {
 
                         case "SubGenresList":
                             assert genres != null;
-                            genres.setSubgenres(subgenres);
+                            assert subgenres != null;
+                            genres.setSubGenresList(subgenres);
                             break;
                         case "Genres":
                             genresList.add(genres);

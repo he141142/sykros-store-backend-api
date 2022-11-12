@@ -48,10 +48,20 @@ public class Genres  extends BaseEntity{
     return this.name;
   }
 
-  @OneToMany(mappedBy = "genres", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+  @OneToMany(mappedBy = "genres", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   List<Subgenres> subgenres = new ArrayList<>();
 
   public void addSubGenres(List<Subgenres> subgenresList){
+    subgenresList.forEach(subgenres1 -> {subgenres1.setGenres(this);});
+    this.subgenres = subgenresList;
+  }
+
+  public void addSubGenres(Subgenres subgenres){
+    subgenres.setGenres(this);
+    this.subgenres.add(subgenres);
+  }
+
+  public void setSubGenresList(List<Subgenres> subgenresList){
     subgenresList.forEach(subgenres1 -> {subgenres1.setGenres(this);});
     this.subgenres = subgenresList;
   }
